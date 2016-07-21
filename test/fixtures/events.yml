@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person_id: 1
+  activity_hours: 1
+  activity_note: MyString
+  activity_place: MyString
+  activity_when: MyString
+
+two:
+  person_id: 1
+  activity_hours: 1
+  activity_note: MyString
+  activity_place: MyString
+  activity_when: MyString

@@ -1,0 +1,10 @@
+<%= stylesheet_link_tag "uikit" %>
+
+<div class="uk-container uk-container-center uk-margin-top">
+  <div class="uk-panel uk-panel-box uk-text-center">
+    <h1>Welcome to Full:Fill!</h1>
+    <p>Find me in app/views/homepage/index.html.erb</p>
+    <%= link_to "Register", new_client_registration_path, :method => :get, class: 'uk-button uk-button-primary uk-button-large' %>
+    <%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
+  </div>
+</div>

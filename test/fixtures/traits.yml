@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  traitname: MyString
+  trait_desc: MyString
+  facet_id: 1
+
+two:
+  traitname: MyString
+  trait_desc: MyString
+  facet_id: 1

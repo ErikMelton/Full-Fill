@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  facettype: MyString
+  facet_long: MyString
+  facet_desc: MyString
+
+two:
+  facettype: MyString
+  facet_long: MyString
+  facet_desc: MyString
