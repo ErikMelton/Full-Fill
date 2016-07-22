@@ -1,3 +1,5 @@
 <h1>Dashboard</h1>
 
 <%= @person.name_first %>
+
+<%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
