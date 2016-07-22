@@ -48,9 +48,19 @@
     editableGrid.renderGrid("tablecontent", "testgrid");
   }
 </script>
+<script>
+  var r = Raphael('paper', 800, 800);
+  r.radar(400, 400, 300, [40,50,20,40,30,42,11,70],{
+    labels: ["USA", "Canada", "Sweden", "Ukraine", "Uzbekistan", "Russia", "Belarus","Germany"],
+    drawPathCircles: true,
+    pathFill: 'rgba(0,20,220,0.5)'
+  });
+</script>
 
 </head>
 
 <body>
 <div id="tablecontent"></div>
+
+<div id="paper"></div>
 </body>
