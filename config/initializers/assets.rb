@@ -9,3 +9,11 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
+Rails.application.config.assets.precompile += %w( editablegrid.css )
+Rails.application.config.assets.precompile += %w( editablegrid.js )
+Rails.application.config.assets.precompile += %w( editablegrid_charts.js )
+Rails.application.config.assets.precompile += %w( editablegrid_charts_ofc.js )
+Rails.application.config.assets.precompile += %w( editablegrid_editors.js )
+Rails.application.config.assets.precompile += %w( editablegrid_renderers.js )
+Rails.application.config.assets.precompile += %w( editablegrid_utils.js )
+Rails.application.config.assets.precompile += %w( editablegrid_validators.js )
