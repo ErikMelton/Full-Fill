@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20160720232345) do
     t.string   "activity_desc"
     t.integer  "trait_id"
     t.string   "activity_note"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "activity_spec_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "clients", force: :cascade do |t|
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160720232345) do
     t.string   "activity_note"
     t.string   "activity_place"
     t.string   "activity_when"
+    t.integer  "activity_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
@@ -62,13 +64,14 @@ ActiveRecord::Schema.define(version: 20160720232345) do
   end
 
   create_table "people", force: :cascade do |t|
+    t.integer  "client_id"
     t.string   "name_first"
     t.string   "name_middle"
     t.string   "name_last"
     t.string   "name_nick"
     t.string   "name_prefix"
     t.string   "name_suffix"
-    t.date     "birth_date"
+    t.string   "birth_date"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -77,8 +80,9 @@ ActiveRecord::Schema.define(version: 20160720232345) do
     t.string   "traitname"
     t.string   "trait_desc"
     t.integer  "facet_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "trait_spec_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end

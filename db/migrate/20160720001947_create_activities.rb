@@ -5,6 +5,7 @@ class CreateActivities < ActiveRecord::Migration
       t.string :activity_desc
       t.integer :trait_id
       t.string :activity_note
+      t.integer :activity_spec_id
 
       t.timestamps null: false
     end

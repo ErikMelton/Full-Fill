@@ -1,0 +1,42 @@
+Trait_ID,Trait,Trait_Desc,Facet_ID
+105,athletic,compete with other people in sports,1
+110,fitness,engage in activities to stay fit,1
+115,martial arts,compete with others in martial arts,1
+120,adventurous,engage in activities and adventures in the outdoors and wilderness,1
+125,racer,race others in a vehicle or on an animal,1
+130,guide,guide clients in actvities in the outdoors and wilderness,1
+135,traveler,travel to new places or commute to work,1
+140,emergency responder,trained to respond to emergencies,1
+145,security,trained to provide security,1
+150,animal care,care for animals,1
+205,vocal,express yourself vocally (not singing),2
+210,dramatic,express yourself through dramatic arts,2
+215,musical,express yourself through music (singing and instruments),2
+220,dancer,express yourself through dance,2
+310,artistic,create artwork,3
+315,craftsman,create craft objects,3
+320,builder,build a structure,3
+325,author,create a literary work,3
+330,culinary,"create a food ingredient, meal, or dining experience",3
+335,designer,"design machines, systems, and structures",3
+340,agricultural,"cultivate land, raise crops, and feed, breed, and raise livestock",3
+345,visual,"create and edit photographs and videos for printed media, films, etc.",3
+405,academic,"relating to a school, college, academy, or other educational institution",4
+410,spiritual,"relating to the spirit, soul, or religion",4
+415,connoisseur,"appreciate fine arts and culture by viewing, listening, and eating",4
+420,legal,pertaining to law and its administration,4
+425,financial,involved with finances and monetary values,4
+430,literary,"pertaining to or of the nature of books and writings, especially those classed as literature",4
+440,gamer,compete with other people or the computer in games (board or electronic),4
+445,technical,involved with computers and electronics (not gaming),4
+450,numerical,involved with numbers,4
+455,scientific,"perform research toward a more comprehensive understanding of nature, including physical, mathematical and social realms",4
+460,visual,relating to sight and visual information,4
+505,teacher,"instruct other people in a topic, skill, or sport",5
+510,familial,pertaining to family,5
+515,charitable,help the disadvantaged by donating your time or money,5
+520,healer,involved with healing others in body and mind,5
+525,governmental,"involved with administration of city, state, or federal affairs",5
+530,sales,sell goods or services to public,5
+535,customer service,involved with assisting the public,5
+540,manager,manage or supervise others in an organization,5

@@ -4,6 +4,7 @@ class CreateTraits < ActiveRecord::Migration
       t.string :traitname
       t.string :trait_desc
       t.integer :facet_id
+      t.integer :trait_spec_id
 
       t.timestamps null: false
     end
