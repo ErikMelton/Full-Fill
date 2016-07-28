@@ -3,4 +3,3 @@ Facet.create(facettype: 'expressive', facet_long: 'Expressive', facet_desc: 'Exp
 Facet.create(facettype: 'creative', facet_long: 'Creative', facet_desc: 'Creative activities')
 Facet.create(facettype: 'abstract', facet_long: 'Abstract', facet_desc: 'Abstraction based activities')
 Facet.create(facettype: 'social', facet_long: 'Social', facet_desc: 'Social activities')
-

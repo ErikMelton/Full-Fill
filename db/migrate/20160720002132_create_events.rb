@@ -4,6 +4,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :person_id
       t.integer :activity_hours
       t.integer :activity_id
+      t.integer :facet_id
       t.string :activity_note
       t.string :activity_place
       t.string :activity_when # Years old
