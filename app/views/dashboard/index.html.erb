@@ -11,85 +11,82 @@
   input.invalid { background: red; color: #FDFDFD; }
 </style>
 
-<script>
+<%= javascript_tag do %>
   window.onload = function() {
 
     var metadata = [];
+    metadata.push({ name: "year", label:"Year", datatype: "string", editable: false});
+    metadata.push({ name: "age", label: "Age", datatype: "integer", editable: false});
     metadata.push({ name: "activity", label: "Activity", datatype: "string", editable: true});
-    metadata.push({ name: "firstname", label:"FIRSTNAME", datatype: "string", editable: true});
-    metadata.push({ name: "age", label: "AGE", datatype: "integer", editable: true});
-    metadata.push({ name: "height", label: "HEIGHT", datatype: "double(m,2)", editable: true});
-    metadata.push({ name: "country", label: "COUNTRY", datatype: "string", editable: true});
-    metadata.push({ name: "email", label: "EMAIL", datatype: "email", editable: true});
-    metadata.push({ name: "lastvisit", label: "LAST VISIT", datatype: "date", editable: true});
+    metadata.push({ name: "time_done", label: "Hours", datatype: "integer", editable: true});
+    metadata.push({ name: "note", label: "Notes", datatype: "string", editable: true});
 
     // ["TRAIT"] = {"activity_key":"Label",...};
-    metadata[0].values = {};
-    metadata[0].values["Athletic"] = {"pfb":"Play Football","pbb":"Play Basketball","uk":"Great-Britain","nl":"Nederland"};
-    metadata[0].values["America"] = {"br":"Brazil","ca":"Canada","us":"USA"};
-    metadata[0].values["Africa"] = {"ng":"Nigeria","za":"South-Africa","zw":"Zimbabwe"};
+    metadata[2].values = {};
+    metadata[2].values["Athletic"] = {"pfb":"Play Football","pbb":"Play Basketball","uk":"Great-Britain","nl":"Nederland"};
+    metadata[2].values["America"] = {"br":"Brazil","ca":"Canada","us":"USA"};
+    metadata[2].values["Africa"] = {"ng":"Nigeria","za":"South-Africa","zw":"Zimbabwe"};
 
     var data = [];
-    data.push({id: 1, values: {"activity":"pbb","age":33,"name":"Duke","firstname":"Patience","height":1.842,"email":"patience.duke@gmail.com","lastvisit":"11\/12\/2002"}});
-    data.push({id: 2, values: {"activity":"pfb","age":33,"name":"Duke","firstname":"Patience","height":1.842,"email":"patience.duke@gmail.com","lastvisit":"11\/12\/2002"}});
+    var ageArr = <%= escape_javascript @ageArr.to_json %>
+
+    for(i = 0; i < ageArr.length; i++) {
+      let year = <%= raw @currentYear.to_i %>
+      year = year - ageArr.length + i + 1;
+      year = year.toString();
+      console.log("year", year);
+      data.push({id: i, values: {"activity":"","age":i,"name":"Duke","firstname":"Patience","year":year,}});
+    }
 
     editableGrid = new EditableGrid("DemoGridJsData");
     editableGrid.load({"metadata": metadata, "data": data});
     editableGrid.renderGrid("tablecontent", "testgrid");
-  }
-</script>
 
-<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
-<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
-<script type="text/javascript">
-  FusionCharts.ready(function(){
-    var fusioncharts = new FusionCharts({
-          type: 'radar',
-          renderAt: 'chart-container',
-          width: '500',
-          height: '350',
-          dataFormat: 'json',
-          dataSource: {
-            "chart": {
-              "caption": "Personality Map",
-              "subCaption": "Your own personality",
-              "numberPreffix": "$",
-              "theme": "fint",
-              "radarfillcolor": "#ffffff",
-            },
-            "categories": [{
-              "category": [{
-                "label": "Physical"
-              }, {
-                "label": "Expressive"
-              }, {
-                "label": "Creative"
-              }, {
-                "label": "Abstract"
-              }, {
-                "label": "Social"
-              }]
-            }],
-            "dataset": [{
-              "seriesname": "Facets",
-              "data": [{
-                "value": "10"
-              }, {
-                "value": "4.8"
-              }, {
-                "value": "91"
-              }, {
-                "value": "4.0"
-              }, {
-                "value": "3.6"
-              }]
+
+
+    FusionCharts.ready(function(){
+      var fusioncharts = new FusionCharts({
+      type: 'radar',
+      renderAt: 'chart-container',
+      width: '500',
+      height: '350',
+      dataFormat: 'json',
+      dataSource: {
+        "chart": {
+        "caption": "Personality Map",
+        "subCaption": "Your own personality",
+        "numberPreffix": "$",
+        "theme": "fint",
+        "radarfillcolor": "#ffffff",
+        },
+        "categories": [{
+          "category": [{"label": "Physical"}, {"label": "Expressive"}, {"label": "Creative"},
+                      {"label": "Abstract"}, {"label": "Social"}]}],
+        "dataset": [{
+          "seriesname": "Facets",
+            "data": [{
+              "value": "10"
+            }, {
+              "value": "4.8"
+            }, {
+              "value": "91"
+            }, {
+              "value": "4.0"
+            }, {
+              "value": "3.6"
             }]
-          }
+          }]
         }
+      }
     );
     fusioncharts.render();
-  });
-</script>
+    });
+    }
+<% end %>
+<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
+  <%= javascript_tag do %>
+  <% end %>
 
 <body>
 <div id="tablecontent"></div>
