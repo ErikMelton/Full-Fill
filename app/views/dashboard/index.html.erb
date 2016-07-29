@@ -3,30 +3,45 @@
 <%= @person.name_first %>
 
 <%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
-
+<div class="uk-button uk-button-small uk-button-danger" onclick="incrementNumOfRows()">New Row</div>
 <style>
-  table.testgrid { border-collapse: collapse; border: 1px solid #CCB; width: 800px; }
+  table.testgrid { border-collapse: collapse; border: 1px solid #CCB; width: 100%; }
   table.testgrid td, table.testgrid th { padding: 5px; border: 1px solid #E0E0E0; }
   table.testgrid th { background: #E5E5E5; text-align: left; }
   input.invalid { background: red; color: #FDFDFD; }
 </style>
 
 <%= javascript_tag do %>
-  window.onload = function() {
+  var activityNum = <%= raw @numOfActivityColumns.to_i %>
 
+  incrementNumOfRows = function() {
+    activityNum = activityNum + 1;
+    window.onload();
+  }
+
+  updateGrid = function() {
+
+  }
+
+  window.onload = function() {
     var metadata = [];
     metadata.push({ name: "year", label:"Year", datatype: "string", editable: false});
     metadata.push({ name: "age", label: "Age", datatype: "integer", editable: false});
-    metadata.push({ name: "activity", label: "Activity", datatype: "string", editable: true});
-    metadata.push({ name: "time_done", label: "Hours", datatype: "integer", editable: true});
+    for(i = 0; i < activityNum; i++) {
+      labelNum = i + 1;
+      metadata.push({ name: "activity", label: "Activity " + labelNum, datatype: "string", editable: true});
+      metadata.push({ name: "time_done", label: "Hours", datatype: "integer", editable: true});
+    }
     metadata.push({ name: "note", label: "Notes", datatype: "string", editable: true});
 
     // ["TRAIT"] = {"activity_key":"Label",...};
-    metadata[2].values = {};
-    metadata[2].values["Athletic"] = {"pfb":"Play Football","pbb":"Play Basketball","uk":"Great-Britain","nl":"Nederland"};
-    metadata[2].values["America"] = {"br":"Brazil","ca":"Canada","us":"USA"};
-    metadata[2].values["Africa"] = {"ng":"Nigeria","za":"South-Africa","zw":"Zimbabwe"};
-
+    for(i = 0; i < activityNum; i++) {
+      currIndex = 2 + i * 2
+      metadata[currIndex].values = {};
+      metadata[currIndex].values["Athletic"] = {"pfb":"Play Football","pbb":"Play Basketball","uk":"Great-Britain","nl":"Nederland"};
+      metadata[currIndex].values["America"] = {"br":"Brazil","ca":"Canada","us":"USA"};
+      metadata[currIndex].values["Africa"] = {"ng":"Nigeria","za":"South-Africa","zw":"Zimbabwe"};
+    }
     var data = [];
     var ageArr = <%= escape_javascript @ageArr.to_json %>
 
@@ -65,15 +80,15 @@
         "dataset": [{
           "seriesname": "Facets",
             "data": [{
-              "value": "10"
+              "value": "<%= raw @physScore.to_s %>"
             }, {
-              "value": "4.8"
+              "value": "<%= raw @expresScore.to_s %>"
             }, {
-              "value": "91"
+              "value": "<%= raw @creatScore.to_s %>"
             }, {
-              "value": "4.0"
+              "value": "<%= raw @abstractScore.to_s %>"
             }, {
-              "value": "3.6"
+              "value": "<%= raw @socialScore.to_s %>"
             }]
           }]
         }
@@ -85,8 +100,6 @@
 <% end %>
 <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
 <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
-  <%= javascript_tag do %>
-  <% end %>
 
 <body>
 <div id="tablecontent"></div>
