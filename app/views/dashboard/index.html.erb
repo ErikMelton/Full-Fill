@@ -1,3 +1,6 @@
+<script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
+
 <h1>Dashboard</h1>
 
 <%= @person.name_first %>
@@ -12,52 +15,61 @@
 </style>
 
 <%= javascript_tag do %>
-  var activityNum = <%= raw @numOfActivityColumns.to_i %>
-
-  incrementNumOfRows = function() {
-    activityNum = activityNum + 1;
-    window.onload();
-  }
-
-  updateGrid = function() {
-
-  }
-
-  window.onload = function() {
-    var metadata = [];
-    metadata.push({ name: "year", label:"Year", datatype: "string", editable: false});
-    metadata.push({ name: "age", label: "Age", datatype: "integer", editable: false});
-    for(i = 0; i < activityNum; i++) {
-      labelNum = i + 1;
-      metadata.push({ name: "activity", label: "Activity " + labelNum, datatype: "string", editable: true});
-      metadata.push({ name: "time_done", label: "Hours", datatype: "integer", editable: true});
-    }
-    metadata.push({ name: "note", label: "Notes", datatype: "string", editable: true});
-
-    // ["TRAIT"] = {"activity_key":"Label",...};
-    for(i = 0; i < activityNum; i++) {
-      currIndex = 2 + i * 2
-      metadata[currIndex].values = {};
-      metadata[currIndex].values["Athletic"] = {"pfb":"Play Football","pbb":"Play Basketball","uk":"Great-Britain","nl":"Nederland"};
-      metadata[currIndex].values["America"] = {"br":"Brazil","ca":"Canada","us":"USA"};
-      metadata[currIndex].values["Africa"] = {"ng":"Nigeria","za":"South-Africa","zw":"Zimbabwe"};
-    }
+    var activityNum = <%= raw @numOfActivityColumns.to_i %>
+    var prev_data = [];
     var data = [];
-    var ageArr = <%= escape_javascript @ageArr.to_json %>
+    var metadata = [];
 
-    for(i = 0; i < ageArr.length; i++) {
-      let year = <%= raw @currentYear.to_i %>
-      year = year - ageArr.length + i + 1;
-      year = year.toString();
-      console.log("year", year);
-      data.push({id: i, values: {"activity":"","age":i,"name":"Duke","firstname":"Patience","year":year,}});
+    incrementNumOfRows = function() {
+      activityNum = activityNum + 1;
+      intiColumns();
+      window.onload();
     }
 
-    editableGrid = new EditableGrid("DemoGridJsData");
-    editableGrid.load({"metadata": metadata, "data": data});
-    editableGrid.renderGrid("tablecontent", "testgrid");
+    initColumns = function() {
+      metadata = [];
+      metadata.push({ name: "year", label:"Year", datatype: "string", editable: false});
+      metadata.push({ name: "age", label: "Age", datatype: "integer", editable: false});
 
+      for(i = 0; i < activityNum; i++) {
+       labelNum = i + 1;
+       metadata.push({ name: "activity", label: "Activity " + labelNum, datatype: "string", editable: true});
+       metadata.push({ name: "time_done", label: "Hours", datatype: "integer", editable: true});
+      }
+    }
 
+    window.onload = function() {
+
+      initColumns();
+
+      // ["TRAIT"] = {"activity_key":"Label",...};
+      for(i = 0; i < activityNum; i++) {
+        currIndex = 2 + i * 2
+        metadata[currIndex].values = {};
+        metadata[currIndex].values["Physical"] = <%= raw @physString.to_s %>
+        metadata[currIndex].values["Expressive"] = <%= raw @expressString.to_s %>
+        metadata[currIndex].values["Creative"] = <%= raw @creativeString.to_s %>
+        metadata[currIndex].values["Abstract"] = <%= raw @abstractString.to_s %>
+        metadata[currIndex].values["Social"] = <%= raw @socialString.to_s %>
+      }
+      data = [];
+      var ageArr = <%= escape_javascript @ageArr.to_json %>
+
+      for(i = 0; i < ageArr.length; i++) {
+        let year = <%= raw @currentYear.to_i %>
+        year = year - ageArr.length + i + 1;
+        year = year.toString();
+        console.log("year", year);
+        data.push({id: i, values: {"activity":"play football","age":i,"year":year,}});
+      }
+
+      editableGrid = new EditableGrid("DemoGridJsData");
+      editableGrid.load({"metadata": metadata, "data": data});
+      editableGrid.renderGrid("tablecontent", "testgrid");
+    }
+<% end %>
+
+<%= javascript_tag do %>
 
     FusionCharts.ready(function(){
       var fusioncharts = new FusionCharts({
@@ -75,20 +87,20 @@
         "radarfillcolor": "#ffffff",
         },
         "categories": [{
-          "category": [{"label": "Physical"}, {"label": "Expressive"}, {"label": "Creative"},
-                      {"label": "Abstract"}, {"label": "Social"}]}],
+          "category": [{"label": "Physical"}, {"label": "Social"}, {"label": "Abstract"},
+                      {"label": "Creative"}, {"label": "Expressive"}]}],
         "dataset": [{
           "seriesname": "Facets",
             "data": [{
               "value": "<%= raw @physScore.to_s %>"
             }, {
-              "value": "<%= raw @expresScore.to_s %>"
-            }, {
-              "value": "<%= raw @creatScore.to_s %>"
+              "value": "<%= raw @socialScore.to_s %>"
             }, {
               "value": "<%= raw @abstractScore.to_s %>"
             }, {
-              "value": "<%= raw @socialScore.to_s %>"
+              "value": "<%= raw @creatScore.to_s %>"
+            }, {
+              "value": "<%= raw @expresScore.to_s %>"
             }]
           }]
         }
@@ -96,10 +108,8 @@
     );
     fusioncharts.render();
     });
-    }
+
 <% end %>
-<script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
-<script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
 
 <body>
 <div id="tablecontent"></div>
