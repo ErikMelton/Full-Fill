@@ -6,7 +6,7 @@
 <%= @person.name_first %>
 
 <%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
-<div class="uk-button uk-button-small uk-button-danger" onclick="incrementNumOfRows()">New Row</div>
+<%= link_to "Add Row", 'add_row', class: 'uk-button uk-button-small' %>
 <style>
   table.testgrid { border-collapse: collapse; border: 1px solid #CCB; width: 100%; }
   table.testgrid td, table.testgrid th { padding: 5px; border: 1px solid #E0E0E0; }
@@ -22,7 +22,7 @@
 
     incrementNumOfRows = function() {
       activityNum = activityNum + 1;
-      intiColumns();
+      initColumns();
       window.onload();
     }
 
@@ -36,13 +36,7 @@
        metadata.push({ name: "activity", label: "Activity " + labelNum, datatype: "string", editable: true});
        metadata.push({ name: "time_done", label: "Hours", datatype: "integer", editable: true});
       }
-    }
 
-    window.onload = function() {
-
-      initColumns();
-
-      // ["TRAIT"] = {"activity_key":"Label",...};
       for(i = 0; i < activityNum; i++) {
         currIndex = 2 + i * 2
         metadata[currIndex].values = {};
@@ -52,18 +46,29 @@
         metadata[currIndex].values["Abstract"] = <%= raw @abstractString.to_s %>
         metadata[currIndex].values["Social"] = <%= raw @socialString.to_s %>
       }
-      data = [];
+    }
+
+    window.onload = function() {
+
+      initColumns();
+
       var ageArr = <%= escape_javascript @ageArr.to_json %>
 
-      for(i = 0; i < ageArr.length; i++) {
-        let year = <%= raw @currentYear.to_i %>
-        year = year - ageArr.length + i + 1;
-        year = year.toString();
-        console.log("year", year);
-        data.push({id: i, values: {"activity":"play football","age":i,"year":year,}});
+      if(prev_data.length > 0) {
+        data = prev_data.slice();
+      } else {
+        for(i = 0; i < ageArr.length; i++) {
+          let year = <%= raw @currentYear.to_i %>
+          year = year - ageArr.length + i + 1;
+          year = year.toString();
+          data.push({id: i, values: {"year":year,"age":i,"activity":"play football","time_done":0}});
+          prev_data = data.slice();
+        }
       }
 
-      editableGrid = new EditableGrid("DemoGridJsData");
+      editableGrid = new EditableGrid("DemoGridJsData", {
+        modelChanged: function(rowIndex, columnIndex, oldValue, newValue, row) { alert("Value for '" + this.getColumnName(columnIndex) + "' in row " + row.id + " has changed from '" + oldValue + "' to '" + newValue + "'"); }
+      });
       editableGrid.load({"metadata": metadata, "data": data});
       editableGrid.renderGrid("tablecontent", "testgrid");
     }

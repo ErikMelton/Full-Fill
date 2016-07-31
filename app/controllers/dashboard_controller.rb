@@ -27,8 +27,34 @@ class DashboardController < ApplicationController
 
     calc_age_range
     input_activities
+    input_events
     calc_scores
 
+  end
+
+  def add_row
+
+  end
+
+  def modes(array, find_all=true)
+    histogram = array.inject(Hash.new(0)) { |h, n| h[n] += 1; h }
+    modes = nil
+    histogram.each_pair do |item, times|
+      modes << item if modes && times == modes[0] and find_all
+      modes = [times, item] if (!modes && times>1) or (modes && times>modes[0])
+    end
+
+    return modes ? modes[1...modes.size] : modes
+  end
+
+  def input_events
+    ageModeArray = []
+
+    @events.each do |event|
+      ageModeArray.push(event.activity_when)
+    end
+
+    ageMode = modes(ageModeArray)
   end
 
   def input_activities
