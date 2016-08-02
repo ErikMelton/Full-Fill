@@ -4,6 +4,6 @@ Rails.application.routes.draw do
 
   devise_for :clients, :controllers => {:registrations => "clients/registrations"}
   get 'dashboard/index' => 'dashboard#index'
-  get 'dashboard/add_row' => 'dashboard#add_row'
-
+  get 'dashboard/add_event' => 'dashboard#add_event'
+  post 'dashboard/add_event' => 'dashboard#add_events'
 end

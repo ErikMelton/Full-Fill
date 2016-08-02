@@ -32,8 +32,23 @@ class DashboardController < ApplicationController
 
   end
 
-  def add_row
+  def add_events
+    activity = JSON.parse(params[:activity].to_json)['id']
+    activity_id = Activity.find(activity).activity_spec_id
+    activity_hours = params[:activity_hours]
+    activity_note = params[:activity_note]
+    activity_place = params[:activity_place]
+    activity_when = params[:activity_when]
 
+    person_id = Person.find_by(client_id: current_client.id).id
+
+    event = Event.create(person_id: person_id.to_i, activity_hours: activity_hours.to_i, activity_note: activity_note.to_s, activity_place: activity_place.to_s, activity_when: activity_when.to_s, activity_id: activity_id.to_i)
+    event.save
+
+    redirect_to '/dashboard/index'
+  end
+
+  def add_event
   end
 
   def modes(array, find_all=true)
@@ -53,8 +68,6 @@ class DashboardController < ApplicationController
     @events.each do |event|
       ageModeArray.push(event.activity_when)
     end
-
-    ageMode = modes(ageModeArray)
   end
 
   def input_activities

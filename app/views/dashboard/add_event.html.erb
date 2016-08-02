@@ -1,0 +1,32 @@
+<%= form_tag({:action => "add_events"}) do %>
+    <div class="field">
+      <%= label_tag("Activity") %>
+      <%= collection_select(:activity, :id, Activity.all, :id, :activityname, prompt: true) %>
+    </div>
+
+    <div class="field">
+      <%= label_tag(:activity_hours, "Hours Done") %><br />
+      <%= text_field_tag(:activity_hours) %>
+    </div>
+
+    <div class="field">
+      <%= label_tag(:activity_note, "Activity Note") %><br />
+      <%= text_field_tag(:activity_note) %>
+    </div>
+
+    <div class="field">
+      <%= label_tag(:activity_place, "Where did you do this activity?") %><br />
+      <%= text_field_tag :activity_place%>
+    </div>
+
+    <div class="field">
+      <%= label_tag(:activity_when, "When did you do this activity?") %><br />
+      <%= text_field_tag :activity_when %>
+    </div>
+
+    <div class="actions">
+      <%= submit_tag("Add Event") %>
+    </div>
+<% end %>
+
+<%= link_to "Back to Dashboard", dashboard_index_path, class: 'uk-button-danger uk-button uk-button-large' %>
