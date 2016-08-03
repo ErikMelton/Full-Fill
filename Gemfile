@@ -15,6 +15,9 @@ gem 'devise'
 gem 'pg'
 gem 'rails_12factor'
 gem 'hirb'
+gem 'wice_grid', '3.6.0.pre4'
+gem 'font-awesome-sass', '~> 4.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

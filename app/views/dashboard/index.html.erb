@@ -7,72 +7,23 @@
 
 <%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
 <%= link_to "Add Event", 'add_event', class: 'uk-button uk-button-small' %>
-<style>
-  table.testgrid { border-collapse: collapse; border: 1px solid #CCB; width: 100%; }
-  table.testgrid td, table.testgrid th { padding: 5px; border: 1px solid #E0E0E0; }
-  table.testgrid th { background: #E5E5E5; text-align: left; }
-  input.invalid { background: red; color: #FDFDFD; }
-</style>
 
-<%= javascript_tag do %>
-    var activityNum = <%= raw @numOfActivityColumns.to_i %>
-    var prev_data = [];
-    var data = [];
-    var metadata = [];
+<%= grid(@person_grid, show_filters: :always,) do |g|
 
-    incrementNumOfRows = function() {
-      activityNum = activityNum + 1;
-      initColumns();
-      window.onload();
-    }
+  g.column name: 'Activity Name', attribute: 'activity_id' do |act|
+    Activity.where(activity_spec_id: act.activity_id).first.activityname
+  end
 
-    initColumns = function() {
-      metadata = [];
-      metadata.push({ name: "year", label:"Year", datatype: "string", editable: false});
-      metadata.push({ name: "age", label: "Age", datatype: "integer", editable: false});
+  g.column name: 'Hours', attribute: 'activity_hours'
+  g.column name: 'Note', attribute: 'activity_note'
+  g.column name: 'Place', attribute: 'activity_place'
+  g.column name: 'Age', attribute: 'activity_when'
 
-      for(i = 0; i < activityNum; i++) {
-       labelNum = i + 1;
-       metadata.push({ name: "activity", label: "Activity " + labelNum, datatype: "string", editable: true});
-       metadata.push({ name: "time_done", label: "Hours", datatype: "integer", editable: true});
-      }
+  g.column do |task|
+    link_to('Edit', destroy_client_session_path(task))
+  end
+end -%>
 
-      for(i = 0; i < activityNum; i++) {
-        currIndex = 2 + i * 2
-        metadata[currIndex].values = {};
-        metadata[currIndex].values["Physical"] = <%= raw @physString.to_s %>
-        metadata[currIndex].values["Expressive"] = <%= raw @expressString.to_s %>
-        metadata[currIndex].values["Creative"] = <%= raw @creativeString.to_s %>
-        metadata[currIndex].values["Abstract"] = <%= raw @abstractString.to_s %>
-        metadata[currIndex].values["Social"] = <%= raw @socialString.to_s %>
-      }
-    }
-
-    window.onload = function() {
-
-      initColumns();
-
-      var ageArr = <%= escape_javascript @ageArr.to_json %>
-
-      if(prev_data.length > 0) {
-        data = prev_data.slice();
-      } else {
-        for(i = 0; i < ageArr.length; i++) {
-          let year = <%= raw @currentYear.to_i %>
-          year = year - ageArr.length + i + 1;
-          year = year.toString();
-          data.push({id: i, values: {"year":year,"age":i,"activity":"play football","time_done":0}});
-          prev_data = data.slice();
-        }
-      }
-
-      editableGrid = new EditableGrid("DemoGridJsData", {
-        modelChanged: function(rowIndex, columnIndex, oldValue, newValue, row) { alert("Value for '" + this.getColumnName(columnIndex) + "' in row " + row.id + " has changed from '" + oldValue + "' to '" + newValue + "'"); }
-      });
-      editableGrid.load({"metadata": metadata, "data": data});
-      editableGrid.renderGrid("tablecontent", "testgrid");
-    }
-<% end %>
 
 <%= javascript_tag do %>
 

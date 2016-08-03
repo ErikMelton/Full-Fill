@@ -1,4 +1,5 @@
 require 'date'
+require 'wice_grid'
 
 class DashboardController < ApplicationController
   def index
@@ -10,6 +11,7 @@ class DashboardController < ApplicationController
     flash[:success] = 'Welcome, ' + @person.name_first + ' to the Dashboard!'
 
     @events = Event.where(person_id: @person.id)
+    @person_grid = initialize_grid(@events, order: 'events.activity_when', order_direction: 'desc')
 
     @physical = nil
     @expressive = nil
@@ -26,10 +28,8 @@ class DashboardController < ApplicationController
     @numOfActivityColumns = 4
 
     calc_age_range
-    input_activities
     input_events
     calc_scores
-
   end
 
   def add_events
@@ -51,74 +51,12 @@ class DashboardController < ApplicationController
   def add_event
   end
 
-  def modes(array, find_all=true)
-    histogram = array.inject(Hash.new(0)) { |h, n| h[n] += 1; h }
-    modes = nil
-    histogram.each_pair do |item, times|
-      modes << item if modes && times == modes[0] and find_all
-      modes = [times, item] if (!modes && times>1) or (modes && times>modes[0])
-    end
-
-    return modes ? modes[1...modes.size] : modes
-  end
-
   def input_events
     ageModeArray = []
 
     @events.each do |event|
       ageModeArray.push(event.activity_when)
     end
-  end
-
-  def input_activities
-    @activities = Activity.all()
-
-    @physString = ''
-    @expressString = ''
-    @creativeString = ''
-    @abstractString = ''
-    @socialString = ''
-
-    @activities.each do |activity|
-      trait_spec = Trait.where(trait_spec_id: activity.trait_id).first
-      facet_spec = Facet.where(id: trait_spec.facet_id).first
-
-      if(facet_spec.facettype == "physical")
-        key = activity.activityname
-        name = activity.activityname.split.map(&:capitalize).join(' ')
-        @physString << '"' + "#{key}" + '"' + ':' + '"' + "#{name}" + '"' + ','
-      end
-      if(facet_spec.facettype == "expressive")
-        key = activity.activityname
-        name = activity.activityname.split.map(&:capitalize).join(' ')
-        @expressString << '"' + "#{key}" + '"' + ':' + '"' + "#{name}" + '"' + ','
-      end
-      if(facet_spec.facettype == "creative")
-        key = activity.activityname
-        name = activity.activityname.split.map(&:capitalize).join(' ')
-        @creativeString << '"' + "#{key}" + '"' + ':' + '"' + "#{name}" + '"' + ','
-      end
-      if(facet_spec.facettype == "abstract")
-        key = activity.activityname
-        name = activity.activityname.split.map(&:capitalize).join(' ')
-        @abstractString << '"' + "#{key}" + '"' + ':' + '"' + "#{name}" + '"' + ','
-      end
-      if(facet_spec.facettype == "social")
-        key = activity.activityname
-        name = activity.activityname.split.map(&:capitalize).join(' ')
-        @socialString << '"' + "#{key}" + '"' + ':' + '"' + "#{name}" + '"' + ','
-      end
-    end
-    @physString = @physString[0...-1] + '}'
-    @physString = @physString.insert(0, "{");
-    @expressString = @expressString[0...-1] + '}'
-    @expressString = @expressString.insert(0, "{");
-    @creativeString = @creativeString[0...-1] + '}'
-    @creativeString = @creativeString.insert(0, "{");
-    @abstractString = @abstractString[0...-1] + '}'
-    @abstractString = @abstractString.insert(0, "{");
-    @socialString = @socialString[0...-1] + '}'
-    @socialString = @socialString.insert(0, "{");
   end
 
   def calc_age_range
