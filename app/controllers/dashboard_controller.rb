@@ -7,9 +7,14 @@ class DashboardController < ApplicationController
       redirect_to '/'
     end
 
+    @client_ID = current_client.id
     @person = Person.find_by(client_id: current_client.id)
     flash[:success] = 'Welcome, ' + @person.name_first + ' to the Dashboard!'
 
+    calcAllEvents
+  end
+
+  def calcAllEvents
     @events = Event.where(person_id: @person.id)
     @person_grid = initialize_grid(@events, order: 'events.activity_when', order_direction: 'desc')
 
@@ -49,6 +54,7 @@ class DashboardController < ApplicationController
   end
 
   def add_event
+    redirect_to '/events/new'
   end
 
   def input_events

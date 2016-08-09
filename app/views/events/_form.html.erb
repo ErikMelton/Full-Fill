@@ -1,0 +1,16 @@
+<%= simple_form_for(@event) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :activity_id %>
+    <%= f.input :activity_hours %>
+    <%= f.input :activity_note %>
+    <%= f.input :activity_place %>
+    <%= f.input :activity_when %>
+    <%= f.input :person_id, :as => :hidden, :input_html => { :value => @client_ID } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
