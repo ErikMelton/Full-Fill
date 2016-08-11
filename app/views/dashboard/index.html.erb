@@ -20,7 +20,7 @@
   g.column name: 'Age', attribute: 'activity_when'
 
   g.column do |task|
-    link_to('Edit', destroy_client_session_path(task))
+    # link_to('Delete', destroy_client_session_path(task))
   end
 end -%>
 
@@ -48,15 +48,15 @@ end -%>
         "dataset": [{
           "seriesname": "Facets",
             "data": [{
-              "value": "<%= raw @physScore.to_s %>"
+              "value": "<%= raw @person.physical_score.to_s %>"
             }, {
-              "value": "<%= raw @socialScore.to_s %>"
+              "value": "<%= raw @person.social_score.to_s %>"
             }, {
-              "value": "<%= raw @abstractScore.to_s %>"
+              "value": "<%= raw @person.abstract_score.to_s %>"
             }, {
-              "value": "<%= raw @creatScore.to_s %>"
+              "value": "<%= raw @person.creative_score.to_s %>"
             }, {
-              "value": "<%= raw @expresScore.to_s %>"
+              "value": "<%= raw @person.expressive_score.to_s %>"
             }]
           }]
         }

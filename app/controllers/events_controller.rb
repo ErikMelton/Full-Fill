@@ -16,16 +16,23 @@ class EventsController < ApplicationController
   def new
     @event = Event.new(person_id: current_client.id)
     @person = Person.find_by(client_id: current_client.id)
+    @activities = Activity.all
+    @activityIDs = []
+    @activities.each do |item|
+      @activityIDs << item.activity_spec_id
+    end
   end
 
   # GET /events/1/edit
   def edit
+    @person = Person.find_by(client_id: current_client.id)
   end
 
   # POST /events
   # POST /events.json
   def create
     @person = Person.find_by(client_id: current_client.id)
+    @activities = Activity.all
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -63,10 +70,8 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
   end

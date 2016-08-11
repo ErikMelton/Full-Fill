@@ -2,8 +2,8 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :activity_id %>
-    <%= f.input :activity_hours %>
+    <%= f.input :activity_id, collection: @activityIDs %>
+    <%= f.input :activity_hours, prompt: "How long did you do this?"%>
     <%= f.input :activity_note %>
     <%= f.input :activity_place %>
     <%= f.input :activity_when %>
