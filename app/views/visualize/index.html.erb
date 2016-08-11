@@ -1,0 +1,51 @@
+<script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
+
+<h1>Visualize</h1>
+<p>Find me in app/views/visualize/index.html.erb</p>
+
+<body>
+<div id="chart-container"></div>
+
+<%= javascript_tag do %>
+
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'radar',
+    renderAt: 'chart-container',
+    width: '500',
+    height: '350',
+    dataFormat: 'json',
+    dataSource: {
+    "chart": {
+    "caption": "Personality Map",
+    "subCaption": "Your own personality",
+    "numberPreffix": "$",
+    "theme": "fint",
+    "radarfillcolor": "#ffffff",
+    },
+    "categories": [{
+    "category": [{"label": "Physical"}, {"label": "Social"}, {"label": "Abstract"},
+    {"label": "Creative"}, {"label": "Expressive"}]}],
+    "dataset": [{
+    "seriesname": "Facets",
+    "data": [{
+    "value": "<%= raw @physScore.to_s %>"
+    }, {
+    "value": "<%= raw @socialScore.to_s %>"
+    }, {
+    "value": "<%= raw @abstractScore.to_s %>"
+    }, {
+    "value": "<%= raw @creatScore.to_s %>"
+    }, {
+    "value": "<%= raw @expresScore.to_s %>"
+    }]
+    }]
+    }
+    }
+    );
+    fusioncharts.render();
+    });
+
+<% end %>
+

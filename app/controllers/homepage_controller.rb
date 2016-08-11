@@ -4,7 +4,4 @@ class HomepageController < ApplicationController
       redirect_to '/dashboard/index'
     end
   end
-
-  def signin
-  end
 end

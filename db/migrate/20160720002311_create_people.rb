@@ -9,6 +9,11 @@ class CreatePeople < ActiveRecord::Migration
       t.string :name_prefix
       t.string :name_suffix
       t.string :birth_date
+      t.integer :physical_score
+      t.integer :social_score
+      t.integer :abstract_score
+      t.integer :creative_score
+      t.integer :expressive_score
 
       t.timestamps null: false
     end

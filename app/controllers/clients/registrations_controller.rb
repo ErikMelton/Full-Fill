@@ -15,6 +15,11 @@ before_action :configure_account_update_params, only: [:update]
     p.name_last = params[:last_name]
     p.birth_date = params[:birthday]
     p.client_id = current_client.id
+    p.physical_score = 0
+    p.abstract_score = 0
+    p.social_score = 0
+    p.expressive_score = 0
+    p.creative_score = 0
     p.save
   end
 

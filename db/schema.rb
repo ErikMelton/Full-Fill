@@ -47,10 +47,10 @@ ActiveRecord::Schema.define(version: 20160720232345) do
   create_table "events", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "activity_hours"
+    t.integer  "activity_id"
     t.string   "activity_note"
     t.string   "activity_place"
     t.string   "activity_when"
-    t.integer  "activity_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
@@ -72,8 +72,13 @@ ActiveRecord::Schema.define(version: 20160720232345) do
     t.string   "name_prefix"
     t.string   "name_suffix"
     t.string   "birth_date"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "physical_score"
+    t.integer  "social_score"
+    t.integer  "abstract_score"
+    t.integer  "creative_score"
+    t.integer  "expressive_score"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "traits", force: :cascade do |t|
