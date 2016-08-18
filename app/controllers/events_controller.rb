@@ -21,6 +21,7 @@ class EventsController < ApplicationController
     @activities.each do |item|
       @activityIDs << item.activity_spec_id
     end
+    @hours = 0
   end
 
   # GET /events/1/edit

@@ -3,7 +3,8 @@
 
   <div class="form-inputs">
     <%= f.input :activity_id, collection: @activityIDs %>
-    <%= f.input :activity_hours, prompt: "How long did you do this?"%>
+    <%= f.input :activity_hours, :input_html => {:value => 0}%>
+    <div onclick="return mathHelp()" class="uk-button uk-button-danger uk-button-small">Week to Year</div>
     <%= f.input :activity_note %>
     <%= f.input :activity_place %>
     <%= f.input :activity_when %>
@@ -13,4 +14,19 @@
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
+<% end %>
+
+<%= javascript_tag do %>
+    function mathHelp() {
+      var hoursPerWeek = prompt("How many hours per week?", "0");
+      var hours = 0;
+      var totalHours = 0;
+      hours = parseFloat(hoursPerWeek);
+      if(hours != null) {
+        totalHours = hours * 52;
+      }
+      document.getElementById("event_activity_hours").value = totalHours;
+    return;
+    }
+
 <% end %>
