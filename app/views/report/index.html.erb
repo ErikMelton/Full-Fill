@@ -1,0 +1,100 @@
+<h1>Report</h1>
+<br/>
+<%= link_to "Dashboard", dashboard_index_path, class: 'uk-button uk-button-small' %>
+<br/>
+<% if @viewReport %>
+    <h2>Abstract Facet</h2>
+    <% if @abstract_events.length == 0 %>
+        You have no abstract events
+    <% else %>
+        <ul>
+          <% traits = [] %>
+          <% temp = Trait.where(facet_id: 4) %>
+          <% temp.each do |temp| traits.push(temp.traitname) end %>
+
+          <% @abstract_events.each do |event| %>
+              <% activity = Activity.find_by(activity_spec_id: event.activity_id) %>
+              <h3><%= Trait.find_by(trait_spec_id: activity.trait_id).trait_desc.to_s %></h3>
+              <li><%= activity.activityname %>, <%= event.activity_hours %> hours</li>
+          <% end %>
+        </ul>
+        <br/>
+        Total Abstract hours: <%= @abstract_hours.to_i %>
+    <% end %>
+    <hr />
+    <h2>Social Facet</h2>
+    <% if @social_events.length == 0 %>
+        You have no social events
+    <% else %>
+        <ul>
+          <% traits = [] %>
+          <% temp = Trait.where(facet_id: 4) %>
+          <% temp.each do |temp| traits.push(temp.traitname) end %>
+
+          <% @social_events.each do |event| %>
+              <% activity = Activity.find_by(activity_spec_id: event.activity_id) %>
+              <h3><%= Trait.find_by(trait_spec_id: activity.trait_id).trait_desc.to_s %></h3>
+              <li><%= activity.activityname %>, <%= event.activity_hours %> hours</li>
+          <% end %>
+        </ul>
+        <br/>
+        Total Social hours: <%= @social_hours.to_i %>
+    <% end %>
+    <hr />
+    <h2>Physical Facet</h2>
+    <% if @physical_events.length == 0 %>
+        You have no physical events
+    <% else %>
+        <ul>
+          <% traits = [] %>
+          <% temp = Trait.where(facet_id: 1) %>
+          <% temp.each do |temp| traits.push(temp.traitname) end %>
+
+          <% @physical_events.each do |event| %>
+              <% activity = Activity.find_by(activity_spec_id: event.activity_id) %>
+              <h3><%= Trait.find_by(trait_spec_id: activity.trait_id).trait_desc.to_s %></h3>
+              <li><%= activity.activityname %>, <%= event.activity_hours %> hours</li>
+          <% end %>
+        </ul>
+        <br/>
+        Total Physical hours: <%= @physical_hours.to_i %>
+    <% end %>
+    <hr/>
+    <h2>Expressive Facet</h2>
+    <% if @expressive_events.length == 0 %>
+        You have no expressive events
+    <% else %>
+        <ul>
+          <% traits = [] %>
+          <% temp = Trait.where(facet_id: 4) %>
+          <% temp.each do |temp| traits.push(temp.traitname) end %>
+
+          <% @expressive_events.each do |event| %>
+              <% activity = Activity.find_by(activity_spec_id: event.activity_id) %>
+              <h3><%= Trait.find_by(trait_spec_id: activity.trait_id).trait_desc.to_s %></h3>
+              <li><%= activity.activityname %>, <%= event.activity_hours %> hours</li>
+          <% end %>
+        </ul>
+        Total Expressive hours: <%= @expressive_hours.to_i %>
+    <% end %>
+    <hr/>
+    <h2>Creative Facet</h2>
+    <% if @creative_events.length == 0 %>
+        You have no creative events
+    <% else %>
+        <ul>
+          <% traits = [] %>
+          <% temp = Trait.where(facet_id: 4) %>
+          <% temp.each do |temp| traits.push(temp.traitname) end %>
+
+          <% @creative_events.each do |event| %>
+              <% activity = Activity.find_by(activity_spec_id: event.activity_id) %>
+              <h3><%= Trait.find_by(trait_spec_id: activity.trait_id).trait_desc.to_s %></h3>
+              <li><%= activity.activityname %>, <%= event.activity_hours %> hours</li>
+          <% end %>
+        </ul>
+        Total Creative hours: <%= @creative_hours.to_i %>
+    <% end %>
+    <hr/>
+    <h2>Total Hours: <%= @totalHours.to_i %></h2>
+<% end %>

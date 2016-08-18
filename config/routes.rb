@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'report/index'
+
   get 'tell_more/index'
 
   get 'visualize/index'

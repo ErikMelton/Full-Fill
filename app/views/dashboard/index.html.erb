@@ -7,6 +7,7 @@
 
 <%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
 <%= link_to "Add Event", 'add_event', class: 'uk-button uk-button-small' %>
+<%= link_to "Report", report_index_path, class: 'uk-button uk-button-small' %>
 
 <%= grid(@person_grid, show_filters: :always,) do |g|
 
