@@ -37,6 +37,13 @@ class DashboardController < ApplicationController
     calc_age_range
     input_events
     calc_scores
+    getTopThreeEvents
+  end
+
+  def getTopThreeEvents
+    @sortedEvents = @events.sort_by { |obj| obj.activity_hours }.reverse
+    @topEvent = @sortedEvents[0];
+    @secondEvent = @sortedEvents[1];
   end
 
   def add_event

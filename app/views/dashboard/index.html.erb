@@ -2,8 +2,18 @@
 <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
 
 <h1>Dashboard</h1>
-
 <%= @person.name_first %>
+<br/><br/>
+<span><%= Activity.find_by_activity_spec_id(@topEvent.activity_id).activityname.humanize %>, you have <%= @topEvent.activity_hours %> out of ten thousand hours to become a master
+  <div class="uk-progress uk-progress-success" style="width: 550px;">
+    <div class="uk-progress-bar" style="width: <%= @topEvent.activity_hours / 100%>%;"> <%= @topEvent.activity_hours / 100%>%</div>
+  </div>
+</span>
+<span><%= Activity.find_by_activity_spec_id(@secondEvent.activity_id).activityname.humanize %>, you have <%= @secondEvent.activity_hours %> out of ten thousand hours to become a master
+  <div class="uk-progress uk-progress-warning" style="width: 550px;">
+    <div class="uk-progress-bar" style="width: <%= @secondEvent.activity_hours / 100%>%;"> <%= @secondEvent.activity_hours / 100%>%</div>
+  </div>
+</span>
 
 <%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
 <%= link_to "Add Event", 'add_event', class: 'uk-button uk-button-small' %>
