@@ -4,6 +4,7 @@
 <h1>Dashboard</h1>
 <%= @person.name_first %>
 <br/><br/>
+<% if @events.length >= 2 %>
 <span><%= Activity.find_by_activity_spec_id(@topEvent.activity_id).activityname.humanize %>, you have <%= @topEvent.activity_hours %> out of ten thousand hours to become a master
   <div class="uk-progress uk-progress-success" style="width: 550px;">
     <div class="uk-progress-bar" style="width: <%= @topEvent.activity_hours / 100%>%;"> <%= @topEvent.activity_hours / 100%>%</div>
@@ -14,6 +15,7 @@
     <div class="uk-progress-bar" style="width: <%= @secondEvent.activity_hours / 100%>%;"> <%= @secondEvent.activity_hours / 100%>%</div>
   </div>
 </span>
+<% end %>
 
 <%= link_to "Log Out", destroy_client_session_path, :method => :delete, class: 'uk-button-danger uk-button uk-button-large' %>
 <%= link_to "Add Event", 'add_event', class: 'uk-button uk-button-small' %>
