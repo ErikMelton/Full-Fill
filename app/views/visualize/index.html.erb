@@ -2,9 +2,9 @@
 <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
 
 <h1>Visualize</h1>
-<p>Find me in app/views/visualize/index.html.erb</p>
-
 <body>
+<p>Which year would you like to see your map for?</p>
+<%= collection_select(:event, :activity_when, @events, :activity_when, :activity_when, {:prompt => true}) %>
 <div id="chart-container"></div>
 
 <%= javascript_tag do %>
@@ -30,15 +30,15 @@
     "dataset": [{
     "seriesname": "Facets",
     "data": [{
-    "value": "<%= raw @physScore.to_s %>"
+    "value": "<%= raw @person.physical_score.to_s %>"
     }, {
-    "value": "<%= raw @socialScore.to_s %>"
+    "value": "<%= raw @person.social_score.to_s %>"
     }, {
-    "value": "<%= raw @abstractScore.to_s %>"
+    "value": "<%= raw @person.abstract_score.to_s %>"
     }, {
-    "value": "<%= raw @creatScore.to_s %>"
+    "value": "<%= raw @person.creative_score.to_s %>"
     }, {
-    "value": "<%= raw @expresScore.to_s %>"
+    "value": "<%= raw @person.expressive_score.to_s %>"
     }]
     }]
     }
@@ -46,6 +46,5 @@
     );
     fusioncharts.render();
     });
-
 <% end %>
 
