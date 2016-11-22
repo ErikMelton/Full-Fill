@@ -18,8 +18,10 @@ class EventsController < ApplicationController
     @person = Person.find_by(client_id: current_client.id)
     @activities = Activity.all
     @activityIDs = []
+    @activityNames = []
     @activities.each do |item|
       @activityIDs << item.activity_spec_id
+      @activityNames << item.activityname
     end
     @hours = 0
   end

@@ -1,13 +1,20 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <%= simple_form_for(@event) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :activity_id, collection: @activityIDs %>
-    <%= f.input :activity_hours, :input_html => {:value => 0}%>
+    <!-- 1 hr unreported -->
+    <!-- Add a button that goes to a page that displays all possible activities -->
+    <%= f.input :activity_id, :as => :hidden %>
+    <%= f.input :activityname, label: 'Activity Name', wrapper_html: {class: 'ui-widget' } %>
+    <%= f.input :activity_hours, label: 'How many hours did you do this activity for?', :input_html => {:value => 0}%>
     <div onclick="return mathHelp()" class="uk-button uk-button-danger uk-button-small">Week to Year</div>
-    <%= f.input :activity_note %>
-    <%= f.input :activity_place %>
-    <%= f.input :activity_when %>
+    <%= f.input :activity_note, label: 'Activity note? ' %>
+    <%= f.input :activity_place, label: 'Where did you do this activity? ' %>
+    <%= f.input :activity_when, label: 'What age were you? ' %>
     <%= f.input :person_id, :as => :hidden, :input_html => { :value => @person.client_id } %>
   </div>
 
@@ -28,5 +35,30 @@
       document.getElementById("event_activity_hours").value = totalHours;
     return;
     }
+<% end %>
 
+<%= javascript_tag do %>
+    function inputID() {
+      var id = 0;
+      var name = document.getElementById("event_activityname").value;
+      var index = availableInputs.indexOf(name);
+      id = availableIDs[index];
+      document.getElementById("event_activity_id").value = id;
+
+      alert("ID has been set");
+    }
+
+<% end %>
+
+<%= javascript_tag "availableInputs = #{@activityNames.to_json.html_safe};" %>
+<%= javascript_tag "availableIDs = #{@activityIDs.to_json.html_safe};" %>
+
+<%= javascript_tag do %>
+$(function() {
+  $("#event_activityname").autocomplete({
+    source: availableInputs,
+    close: function(event, ui) {}
+    });
+});
+$("#event_activityname").on("autocompleteclose", function(event, ui) { inputID(); });
 <% end %>
