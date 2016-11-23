@@ -9,12 +9,12 @@
     <!-- 1 hr unreported -->
     <!-- Add a button that goes to a page that displays all possible activities -->
     <%= f.input :activity_id, :as => :hidden %>
-    <%= f.input :activityname, label: 'Activity Name', wrapper_html: {class: 'ui-widget' } %>
-    <%= f.input :activity_hours, label: 'How many hours did you do this activity for?', :input_html => {:value => 0}%>
+    <%= f.input :activityname, required: true, label: 'Activity Name', wrapper_html: {class: 'ui-widget' } %>
+    <%= f.input :activity_hours, as: :float, required: true, label: 'How many hours did you do this activity for?', :input_html => {:value => 0}%>
     <div onclick="return mathHelp()" class="uk-button uk-button-danger uk-button-small">Week to Year</div>
-    <%= f.input :activity_note, label: 'Activity note? ' %>
-    <%= f.input :activity_place, label: 'Where did you do this activity? ' %>
-    <%= f.input :activity_when, label: 'What age were you? ' %>
+    <%= f.input :activity_note, required: false, label: 'Activity note? ' %>
+    <%= f.input :activity_place, required: false, label: 'Where did you do this activity? ' %>
+    <%= f.input :activity_when, as: :integer, required: true,  label: 'What age were you? ' %>
     <%= f.input :person_id, :as => :hidden, :input_html => { :value => @person.client_id } %>
   </div>
 
